@@ -1,0 +1,83 @@
+body{
+  background-color:#d0d1d2;
+}
+
+form {
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  input[type="text"],
+  input[type="email"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .bg-image {
+    background-image: url('https://statics.eleconomista.com.ar/2023/03/6424aa55e1e93.jpeg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 120vh;
+
+}
+
+.btn-crear {
+  font-size: 24px;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 24px;
+  margin-top: 20px;
+  text-decoration:none;
+}
+
+.alert-success {
+  font-size: 12px;
+  color: green;
+  background-color: white;
+  padding: 20px;
+  border: 1px solid black;
+  border-radius: 10px;
+  position: absolute;
+  top: 37%;
+  right: 5%;
+  transform: translateY(-50%);
+}
+
+.title-container {
+  margin-bottom: 1rem; 
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+
+
+  
