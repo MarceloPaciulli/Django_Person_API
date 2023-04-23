@@ -6,10 +6,22 @@ from django.views.generic.edit import CreateView
 from .forms import PersonaForm
 from django.contrib import messages
 from .serializers import PersonaSerializer
+from bson.objectid import ObjectId
+from rest_framework.response import Response
+from rest_framework import status
+from django.shortcuts import get_object_or_404
 
 
 def index(request):
     return render(request, 'django_application/index.html')
+
+class PersonaRetrieveView(generics.RetrieveAPIView):
+    queryset = Persona.objects.all()
+    serializer_class = PersonaSerializer
+
+    def get_object(self):
+        _id = self.kwargs['_id']
+        return Persona.objects.get(_id=ObjectId(_id))
 
 
 class PersonaList(generics.ListCreateAPIView):
@@ -31,10 +43,17 @@ class PersonaUpdate(generics.UpdateAPIView):
     queryset = Persona.objects.all()
     serializer_class = PersonaSerializer
 
+    def get_object(self):
+        _id = self.kwargs['_id']
+        return get_object_or_404(Persona, _id=ObjectId(_id))
+
+
 
 class PersonaDelete(generics.DestroyAPIView):
-    queryset = Persona.objects.all()
-    serializer_class = PersonaSerializer
+    def delete(self, request, _id):
+        persona = get_object_or_404(Persona, _id=ObjectId(_id))
+        persona.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class PersonCreateView(CreateView):

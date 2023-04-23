@@ -83,11 +83,12 @@ WSGI_APPLICATION = "django_project.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 
-
+#mongodb atlas database
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'your_database',
+        'NAME': '<your_database>',
         'CLIENT': {
             'host': 'mongodb+srv://<username>:<password>@<cluster>/<your_database>?retryWrites=true&w=majority',
             'username': '<username>',
@@ -96,6 +97,23 @@ DATABASES = {
         },
     }
 }
+'''
+#mongodb local database
+'''
+DATABASES = {
+    'default': {
+        'ENGINE': 'djongo',
+        'NAME': '<your_database>',
+        'HOST': 'localhost',
+        'PORT': 27017,
+        'USER': '<username>',
+        'PASSWORD': '<password>',
+        'AUTH_SOURCE': '<your_database>',
+        'AUTH_MECHANISM': 'SCRAM-SHA-1',
+    }
+}
+'''
+
 
 
 

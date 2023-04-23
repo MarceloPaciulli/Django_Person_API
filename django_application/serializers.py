@@ -21,15 +21,10 @@ class MyField(serializers.Field):
 
 
 class PersonaSerializer(serializers.ModelSerializer):
-    """
-    Serializer for Persona model
-    """
+    id = serializers.CharField(source='_id', read_only=True)
+
     class Meta:
         model = Persona
-        fields = '__all__'
-        extra_kwargs = {
-            'id': {'read_only': True},
-        }
+        fields = ['id', 'nombre', 'apellido', 'email', 'telefono']
 
-    id = MyField()
 
