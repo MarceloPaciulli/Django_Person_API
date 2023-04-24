@@ -1,0 +1,167 @@
+
+
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Personas</title>
+  <link rel="stylesheet" type="text/css" href="../../../static/css/datatbls.css">
+  <!-- Agregar los estilos de DataTables -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.css" />
+
+  <!-- Agregar jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <!-- Agregar DataTables -->
+  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.js"></script>
+</head>
+
+<script type="text/javascript" src="../../../static/js/main.js"></script>
+<script>
+  function eliminarPersona(id, csrf_token) {
+    if (confirm("¿Estás seguro que deseas eliminar esta persona?")) {
+      var delete_url = "{% url 'personas_delete' _id='dummy' %}".replace('dummy', id);
+      $.ajax({
+        url: delete_url,
+        type: "DELETE",
+        beforeSend: function (xhr) {
+          xhr.setRequestHeader("X-CSRFToken", csrf_token);
+        },
+        success: function (response) {
+          location.reload();
+        },
+        error: function (response) {
+          alert("Error al eliminar la persona.");
+        }
+      });
+    }
+  }
+
+
+  function editarPersona(id, csrf_token) {
+    // Obtener la URL de la API para obtener la persona
+    var persona_url = "{% url 'personas_retrieve' _id='dummy' %}".replace('dummy', id);
+    // Realizar una petición GET para obtener la información de la persona
+    $.get(persona_url, function (data) {
+      // Llenar los campos de la ventana modal con la información obtenida
+      $('#nombre').val(data.nombre);
+      $('#apellido').val(data.apellido);
+      $('#email').val(data.email);
+      $('#telefono').val(data.telefono);
+      $('#personaId').val(data.id);
+      $('#modalEditarPersona').modal('show');
+    });
+  }
+
+
+  function guardarPersona(id, csrf_token) {
+    // Obtener la información de la persona a editar
+    var nombre = $('#nombre').val();
+    var apellido = $('#apellido').val();
+    var email = $('#email').val();
+    var telefono = $('#telefono').val();
+
+    // Empaquetar la información en un objeto JSON
+    var data = {
+      'nombre': nombre,
+      'apellido': apellido,
+      'email': email,
+      'telefono': telefono,
+      'csrfmiddlewaretoken': csrf_token
+    };
+
+    const valor = id;
+    const valorString = valor.toString();
+
+    var edit_url = "{% url 'personas_update' _id='dummy' %}".replace('dummy', valor);
+
+    $.ajax({
+      url: edit_url,
+      type: "PUT",
+      data: data,
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader("X-CSRFToken", csrf_token);
+      },
+      success: function (response) {
+        $('#modalEditarPersona').modal('hide');
+        location.reload();
+      },
+      error: function (response) {
+        alert("Error al editar la persona.");
+      }
+    });
+  }
+
+
+
+
+</script>
+<div class="text_center">Persons list</div>
+<div class="modal" tabindex="-1" role="dialog" id="modalEditarPersona">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar persona</h5>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" class="form-control" id="nombre" name="nombre">
+          </div>
+          <div class="form-group">
+            <label for="apellido">Apellido</label>
+            <input type="text" class="form-control" id="apellido" name="apellido">
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email">
+          </div>
+          <div class="form-group">
+            <label for="telefono">Teléfono</label>
+            <input type="text" class="form-control" id="telefono" name="telefono">
+          </div>
+          <input type="hidden" id="personaId" name="personaId">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="$('#modalEditarPersona').modal('hide');" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary"
+          onclick="guardarPersona($('#personaId').val(), '{{ csrf_token }}')">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<table id="personas" class="display">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Email</th>
+      <th>Teléfono</th>
+      <th>ID</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for persona in personas %}
+    <tr>
+      <td>{{ persona.nombre }}</td>
+      <td>{{ persona.apellido }}</td>
+      <td>{{ persona.email }}</td>
+      <td>{{ persona.telefono }}</td>
+      <td>{{ persona.get_id }}</td>
+      <td>
+        <button class="btn btn-primary" onclick="editarPersona('{{ persona.get_id }}', '{{ csrf_token }}')"
+          data-csrf="{{ csrf_token }}">Update</button>
+        <button class="btn btn-danger" onclick="eliminarPersona('{{ persona.get_id }}', '{{ csrf_token }}')"
+          data-csrf="{{ csrf_token }}">Delete</button>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

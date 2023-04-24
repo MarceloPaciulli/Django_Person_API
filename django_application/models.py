@@ -9,4 +9,6 @@ class Persona(models.Model):
     telefono = models.CharField(max_length=20)
 
     objects = models.Manager()
+    def get_id(self):
+        return str(self._id)
 

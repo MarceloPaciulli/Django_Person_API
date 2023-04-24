@@ -15,6 +15,10 @@ from django.shortcuts import get_object_or_404
 def index(request):
     return render(request, 'django_application/index.html')
 
+def list_persons(request):
+    personas = Persona.objects.all()
+    return render(request, 'django_application/persons_list.html', {'personas': personas})
+
 class PersonaRetrieveView(generics.RetrieveAPIView):
     queryset = Persona.objects.all()
     serializer_class = PersonaSerializer
@@ -32,6 +36,8 @@ class PersonaList(generics.ListCreateAPIView):
 class PersonaDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Persona.objects.all()
     serializer_class = PersonaSerializer
+    #lookup_field = '_id'
+
 
 
 class PersonaCreate(generics.CreateAPIView):
