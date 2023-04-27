@@ -27,6 +27,11 @@ function mostrarModalEliminar(id, csrf_token) {
     // Realizar una petición GET para obtener la información de la persona
     $.get(persona_url, function (data) {
       $('#personaId').val(data.id);
+      $('#personaNombre').text('Name: ' + data.nombre);
+      $('#personaApellido').text('Lastname: ' + data.apellido);
+      $('#personaEmail').text('Email: ' + data.email);
+      $('#personaPhone').text('Phone: ' + data.telefono);
+      $('#personaIdEliminar').text('ID: ' + data.id);
       $('#eliminarPersonaModal').modal('show');
     });
   }
@@ -47,7 +52,7 @@ function eliminarPersona(id, csrf_token) {
       actualizarPagina();
     },
     error: function (response) {
-      alert("Error al eliminar la persona.");
+      alert("Error deleting person.");
     }
   });
 }
@@ -107,7 +112,7 @@ function actualizarPagina() {
         location.reload();
       },
       error: function (response) {
-        alert("Error al editar la persona.");
+        alert("Error editing person.");
       }
     });
   }
@@ -122,13 +127,18 @@ function actualizarPagina() {
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="eliminarPersonaModalLabel">Eliminar Persona</h5>
+        <h5 class="modal-title" id="eliminarPersonaModalLabel">Delete Person</h5>
       </div>
       <div class="modal-body">
-        ¿Estás seguro que deseas eliminar esta persona?
+      <strong>Are you sure you want to delete this person?</strong><br><br>
+      <span id="personaNombre"></span><br>
+      <span id="personaApellido"></span><br>
+      <span id="personaEmail"></span><br>
+      <span id="personaPhone"></span><br>
+      <span id="personaIdEliminar"></span>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" onclick="$('#mostrarModalEliminar').modal('hide');" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-secondary" onclick="$('#eliminarPersonaModal').modal('hide');" data-dismiss="modal">Cancel</button>
         <button type="button" class="btn btn-danger" onclick="eliminarPersona($('#personaId').val(), '{{ csrf_token }}')">Delete</button>
       </div>
     </div>
