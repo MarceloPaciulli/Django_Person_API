@@ -20,24 +20,42 @@
 
 <script type="text/javascript" src="../../../static/js/main.js"></script>
 <script>
-  function eliminarPersona(id, csrf_token) {
-    if (confirm("¿Estás seguro que deseas eliminar esta persona?")) {
-      var delete_url = "{% url 'personas_delete' _id='dummy' %}".replace('dummy', id);
-      $.ajax({
-        url: delete_url,
-        type: "DELETE",
-        beforeSend: function (xhr) {
-          xhr.setRequestHeader("X-CSRFToken", csrf_token);
-        },
-        success: function (response) {
-          location.reload();
-        },
-        error: function (response) {
-          alert("Error al eliminar la persona.");
-        }
-      });
-    }
+
+function mostrarModalEliminar(id, csrf_token) {
+    // Obtener la URL de la API para obtener la persona
+    var persona_url = "{% url 'personas_retrieve' _id='dummy' %}".replace('dummy', id);
+    // Realizar una petición GET para obtener la información de la persona
+    $.get(persona_url, function (data) {
+      $('#personaId').val(data.id);
+      $('#eliminarPersonaModal').modal('show');
+    });
   }
+ 
+
+function eliminarPersona(id, csrf_token) {
+  const valor = id;
+  const valorString = valor.toString();
+  var delete_url = "{% url 'personas_delete' _id='dummy' %}".replace('dummy', id);
+  $.ajax({
+    url: delete_url,
+    type: "DELETE",
+    beforeSend: function (xhr) {
+      xhr.setRequestHeader("X-CSRFToken", csrf_token);
+    },
+    success: function (response) {
+      $('#eliminarPersonaModal').modal('hide');
+      actualizarPagina();
+    },
+    error: function (response) {
+      alert("Error al eliminar la persona.");
+    }
+  });
+}
+
+function actualizarPagina() {
+  location.reload();
+}
+
 
 
   function editarPersona(id, csrf_token) {
@@ -99,20 +117,38 @@
 
 </script>
 <div class="text_center">Persons list</div>
+
+<div class="modal fade" id="eliminarPersonaModal" tabindex="-1" role="dialog" aria-labelledby="eliminarPersonaModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="eliminarPersonaModalLabel">Eliminar Persona</h5>
+      </div>
+      <div class="modal-body">
+        ¿Estás seguro que deseas eliminar esta persona?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="$('#mostrarModalEliminar').modal('hide');" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" onclick="eliminarPersona($('#personaId').val(), '{{ csrf_token }}')">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="modal" tabindex="-1" role="dialog" id="modalEditarPersona">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Editar persona</h5>
+        <h5 class="modal-title">Update Person</h5>
       </div>
       <div class="modal-body">
         <form>
           <div class="form-group">
-            <label for="nombre">Nombre</label>
+            <label for="nombre">Name</label>
             <input type="text" class="form-control" id="nombre" name="nombre">
           </div>
           <div class="form-group">
-            <label for="apellido">Apellido</label>
+            <label for="apellido">Lastname</label>
             <input type="text" class="form-control" id="apellido" name="apellido">
           </div>
           <div class="form-group">
@@ -120,16 +156,16 @@
             <input type="email" class="form-control" id="email" name="email">
           </div>
           <div class="form-group">
-            <label for="telefono">Teléfono</label>
+            <label for="telefono">Phone</label>
             <input type="text" class="form-control" id="telefono" name="telefono">
           </div>
           <input type="hidden" id="personaId" name="personaId">
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" onclick="$('#modalEditarPersona').modal('hide');" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-secondary" onclick="$('#modalEditarPersona').modal('hide');" data-dismiss="modal">Cancel</button>
         <button type="button" class="btn btn-primary"
-          onclick="guardarPersona($('#personaId').val(), '{{ csrf_token }}')">Guardar</button>
+          onclick="guardarPersona($('#personaId').val(), '{{ csrf_token }}')">Save</button>
       </div>
     </div>
   </div>
@@ -139,12 +175,12 @@
 <table id="personas" class="display">
   <thead>
     <tr>
-      <th>Nombre</th>
-      <th>Apellido</th>
+      <th>Name</th>
+      <th>Lastname</th>
       <th>Email</th>
-      <th>Teléfono</th>
+      <th>Phone</th>
       <th>ID</th>
-      <th>Acciones</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -158,7 +194,7 @@
       <td>
         <button class="btn btn-primary" onclick="editarPersona('{{ persona.get_id }}', '{{ csrf_token }}')"
           data-csrf="{{ csrf_token }}">Update</button>
-        <button class="btn btn-danger" onclick="eliminarPersona('{{ persona.get_id }}', '{{ csrf_token }}')"
+        <button class="btn btn-danger" onclick="mostrarModalEliminar('{{ persona.get_id }}', '{{ csrf_token }}')"
           data-csrf="{{ csrf_token }}">Delete</button>
       </td>
     </tr>
