@@ -65,12 +65,12 @@ class PersonaDelete(generics.DestroyAPIView):
 class PersonCreateView(CreateView):
     model = Persona
     form_class = PersonaForm
-    template_name = 'django_application/person_create.html'
+    template_name = 'django_application/create_person.html'
     success_url = reverse_lazy('person_success')
 
     def form_valid(self, form):
         response = super().form_valid(form)
-        messages.success(self.request, '¡Person created successfully!')
+        messages.success(self.request, '')
         return response
 
 

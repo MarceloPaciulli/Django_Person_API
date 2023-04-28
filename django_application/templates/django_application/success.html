@@ -11,8 +11,11 @@
         <div class="title-container">
           <h1 class="text-success">Person created successfully!</h1>
         </div>
+        <h2 class="index-title">Django REST API</h2>
         <div class="button-container">
-          <a href="{% url 'index' %}" class="btn btn-lg btn-primary btn-crear my-4">Create another person</a>
+          <a href="{% url 'personas_create' %}" class="button">Create another person</a>
+        
+          <a href="{% url 'index' %}" class="button">Return to Index</a>
         </div>
       </div>
     </div>

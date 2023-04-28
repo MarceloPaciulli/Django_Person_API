@@ -1,9 +1,10 @@
-
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Lista de Personas</title>
   <link rel="stylesheet" type="text/css" href="../../../static/css/datatbls.css">
+  <link rel="stylesheet" type="text/css" href="../../../static/css/customs.css">
   <!-- Agregar los estilos de DataTables -->
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.css" />
 
@@ -121,9 +122,12 @@ function actualizarPagina() {
 
 
 </script>
-<div class="text_center">Persons list</div>
 
-<div class="modal fade" id="eliminarPersonaModal" tabindex="-1" role="dialog" aria-labelledby="eliminarPersonaModalLabel" aria-hidden="true">
+<div class="text_center">Persons list</div>
+<a href="{% url 'index' %}" class="button-return-list">Return to Index</a>
+
+
+<div class="modal fade" id="eliminarPersonaModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="eliminarPersonaModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -145,7 +149,7 @@ function actualizarPagina() {
   </div>
 </div>
 
-<div class="modal" tabindex="-1" role="dialog" id="modalEditarPersona">
+<div class="modal fade" tabindex="-1" role="dialog" id="modalEditarPersona" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalEditarPersonaLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -202,7 +206,7 @@ function actualizarPagina() {
       <td>{{ persona.telefono }}</td>
       <td>{{ persona.get_id }}</td>
       <td>
-        <button class="btn btn-primary" onclick="editarPersona('{{ persona.get_id }}', '{{ csrf_token }}')"
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editarPersonaModal" onclick="editarPersona('{{ persona.get_id }}', '{{ csrf_token }}')"
           data-csrf="{{ csrf_token }}">Update</button>
         <button class="btn btn-danger" onclick="mostrarModalEliminar('{{ persona.get_id }}', '{{ csrf_token }}')"
           data-csrf="{{ csrf_token }}">Delete</button>
