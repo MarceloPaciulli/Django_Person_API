@@ -1,6 +1,8 @@
 # Python Django REST API with MongoDB Atlas
 Simple REST API built with Python, using the Django framework, MongoDB Atlas, JavaScript, HTML, CSS. The CRUD operations (HTTP: POST, GET, DELETE, PUT) are contemplated.
 
+![index_django_project](https://user-images.githubusercontent.com/93230178/235069995-3776e6c6-7fa0-4ce0-a29e-57dfa76cd51c.png)
+
 ![django_image](https://user-images.githubusercontent.com/93230178/233823778-37b76e17-1c4d-48c0-8a6c-fc42e2d43dd3.png)
 
 ![table_persons](https://user-images.githubusercontent.com/93230178/234140208-143f0de1-de25-41b9-82b5-bf98d615bdde.png)
