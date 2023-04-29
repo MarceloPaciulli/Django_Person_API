@@ -9,7 +9,7 @@ Simple REST API built with Python, using the Django framework, MongoDB Atlas, Ja
 
 ![persons_list](https://user-images.githubusercontent.com/93230178/235298744-2066ce4e-8c89-4a26-948d-1506323265fe.png)
 
-![update_person](https://user-images.githubusercontent.com/93230178/235298746-4d070133-1ae0-49a5-8257-fedc6e0c596b.png)
+![update_person](https://user-images.githubusercontent.com/93230178/235299281-a0034f47-f785-421e-9251-7d5dad407988.png)
 
 ![delete_person](https://user-images.githubusercontent.com/93230178/235298748-923317be-1abc-4af2-a15a-1159d1ca6ed2.png)
 
