@@ -3,10 +3,13 @@ Simple REST API built with Python, using the Django framework, MongoDB Atlas, Ja
 
 ![index_django_project](https://user-images.githubusercontent.com/93230178/235069995-3776e6c6-7fa0-4ce0-a29e-57dfa76cd51c.png)
 
-![django_image](https://user-images.githubusercontent.com/93230178/233823778-37b76e17-1c4d-48c0-8a6c-fc42e2d43dd3.png)
+![create_person](https://user-images.githubusercontent.com/93230178/235298731-eb28e4d0-046b-46ee-9d8c-f8e33f748c0c.png)
 
-![table_persons](https://user-images.githubusercontent.com/93230178/234140208-143f0de1-de25-41b9-82b5-bf98d615bdde.png)
+![success_message](https://user-images.githubusercontent.com/93230178/235298737-73e17903-0ebb-4483-890e-7aefbb88a0e9.png)
 
-![update_person](https://user-images.githubusercontent.com/93230178/234140211-79ed9aaa-287a-43ae-ad64-340acc62637c.png)
+![persons_list](https://user-images.githubusercontent.com/93230178/235298744-2066ce4e-8c89-4a26-948d-1506323265fe.png)
 
-![delete_op](https://user-images.githubusercontent.com/93230178/234836611-56ea7990-1ec8-413e-b17f-eb9b0db41091.png)
+![update_person](https://user-images.githubusercontent.com/93230178/235298746-4d070133-1ae0-49a5-8257-fedc6e0c596b.png)
+
+![delete_person](https://user-images.githubusercontent.com/93230178/235298748-923317be-1abc-4af2-a15a-1159d1ca6ed2.png)
+
